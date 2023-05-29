@@ -18,19 +18,14 @@ func TestKnownAlbumsAreRetrievableViaID(t *testing.T) {
 	defaultAlbumId := defaultAlbums[0].ID
 	album, err := Get(defaultAlbumId)
 
-	if err != nil {
-		t.Errorf("Could not find default album with key %s", defaultAlbumId)
-	}
-
+	assert.Nil(t, err)
 	assert.Equal(t, defaultAlbums[0], album)
 }
 
 func TestUnknownAlbumsCannotBeRetrieved(t *testing.T) {
 	_, err := Get("not-an-album-id")
 
-	if err == nil {
-		t.Errorf("Found unexpected album with key %s", "not-an-album-id")
-	}
+	assert.NotNil(t, err)
 }
 
 func TestAddingNewAlbumsIncreasedTheAlbumCount(t *testing.T) {
