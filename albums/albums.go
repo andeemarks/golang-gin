@@ -26,8 +26,6 @@ func Add(newAlbum Album) Album {
 }
 
 func Get(albumId string) (foundAlbum Album, err error) {
-	// Loop over the list of albums, looking for
-	// an album whose ID value matches the parameter.
 	for _, album := range albums {
 		if album.ID == albumId {
 			return album, nil
