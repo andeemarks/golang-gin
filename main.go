@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	albums "github.com/andeemarks/golang-gin/albums/albums"
+	albums "github.com/andeemarks/golang-gin/albums"
 
 	"github.com/gin-gonic/gin"
 )
@@ -67,7 +67,7 @@ curl http://localhost:8080/albums \
 --request "GET"
 */
 func getAlbums(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, albums.GetAll)
+	c.IndentedJSON(http.StatusOK, albums.GetAll())
 }
 
 /*
@@ -78,7 +78,7 @@ curl http://localhost:8080/albums \
     --data '{"id": "4","title": "The Modern Sound of Betty Carter","artist": "Betty Carter","price": 49.99}'
 */
 func addAlbum(c *gin.Context) {
-	var newAlbum albums.album
+	var newAlbum albums.Album
 
 	// Call BindJSON to bind the received JSON to
 	// newAlbum.
@@ -96,7 +96,7 @@ func getAlbum(c *gin.Context) {
 	foundAlbum, err := albums.Get(c.Param("id"))
 
 	if err != nil {
-		return c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 	}
 
 	c.IndentedJSON(http.StatusOK, foundAlbum)
